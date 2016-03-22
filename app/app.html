@@ -1,0 +1,10 @@
+<nav class="navbar navbar-default">
+    <ul class="nav navbar-nav">
+        <li [class.active]="isActive('')" ><a [routerLink]="['/Home']">Home</a></li>
+        <li [class.active]="isActive('/flug-suchen')"><a [routerLink]="['/FlugSuchen']">Suchen</a></li>
+    </ul>
+</nav>
+
+<div class="container">
+    <router-outlet></router-outlet>
+</div>

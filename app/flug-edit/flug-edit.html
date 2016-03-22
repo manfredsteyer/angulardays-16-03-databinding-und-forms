@@ -1,0 +1,52 @@
+﻿<h1>{{info}}</h1>
+
+<form #f="ngForm">
+
+    <div class="form-group">
+        <label>Id</label>
+        <input class="form-control" [(ngModel)]="flug.id">
+    </div>
+    <div class="form-group">
+        <label>Abflugort</label>
+        <input class="form-control" ngControl="abflugort" [(ngModel)]="flug.abflugort" required minlength="2" ort ortAsync>
+        
+        <div *ngIf="f?.controls?.abflugort?.pending">
+            <marquee>Validiere ...</marquee>
+        </div>
+        
+        <div *ngIf="!f?.controls?.abflugort?.valid && !f?.controls?.abflugort?.pending">
+            Diesen Ort gibt es nicht, Alter!
+        </div>
+        
+        <div *ngIf="f?.controls?.abflugort?.hasError('required')">
+            Pflichtfeld!
+        </div>
+        
+        <div *ngIf="f?.controls?.abflugort?.hasError('minlength')">
+            Zu Kurz!
+        </div>
+
+        <div *ngIf="f?.controls?.abflugort?.hasError('ort')">
+            Dieser Ort wird nicht angeflogen!
+        </div>
+
+        <div *ngIf="f?.controls?.abflugort?.hasError('ortAsync')">
+            Dieser Ort wird temp. nicht angeflogen!
+        </div>
+        
+    </div>
+    <div class="form-group">
+        <label>Zielort</label>
+        <input class="form-control" [(ngModel)]="flug.zielort">
+    </div>
+    <div class="form-group">
+        <label>Datum</label>
+        <input class="form-control" [(ngModel)]="flug.datum">
+    </div>
+    
+    <div class="form-group">
+        <input class="btn" type="button" value="Speichern" [disabled]="!f?.valid" >
+    </div>
+
+</form>
+

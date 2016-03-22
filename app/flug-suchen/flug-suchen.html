@@ -1,0 +1,83 @@
+﻿<h1>Flüge suchen!</h1>
+
+<form [ngFormModel]="filter">
+<div>
+    <label>Von:</label>
+    <input class="form-control" ngControl='von'   />
+    
+    <div *ngIf="filter.controls.von.pending">
+        <marquee><b>Validierung wird gerade ausgeführt</b></marquee>
+    </div>
+    
+    <div *ngIf="!filter.controls.von.valid && !filter.controls.von.pending ">
+        Fehler, Du Opfer!
+    </div>
+    
+    <div *ngIf="filter.controls.von.hasError('required')">
+        Pflichtfeld!
+    </div>    
+    <div *ngIf="filter.controls.von.hasError('minlength')">
+        Zu Kurz!
+    </div>    
+    <div *ngIf="filter.controls.von.hasError('maxlength')">
+        Zu Lang!
+    </div>    
+    <div *ngIf="filter.controls.von.hasError('ort')">
+        Dieser Ort wird nicht angeflogen!
+    </div>    
+
+    <div *ngIf="filter.controls.von.hasError('ortAsync')">
+        Flug ist ausgebucht!
+    </div>    
+
+
+</div>
+
+<div>
+    <label>Nach:</label>
+    <input class="form-control" ngControl='nach'  />
+</div>
+
+<div>
+    <input type="button" class="btn btn-default" value="Suchen!" (click)="suchen()" />
+</div>
+</form>
+
+<!--
+<table [hidden]="fluege.length == 0" class="table table-striped">
+
+    <tr *ngFor="#flug of fluege"  [class.active]="flug.id == selectedFlug?.id">
+
+        <td>{{flug.id}}</td>
+        <td>{{flug.datum?.substr(0,10)}}</td>
+        <td>{{flug.abflugort | ort:'short' }}</td>
+        <td>{{flug.zielort | ort:'long' }}</td>
+        <td>
+            <a style="cursor: pointer" (click)="selectFlug(flug)">Auswählen</a>
+            | <a [routerLink]="['/FlugEdit', {id: flug.id}]">Editieren</a>
+        </td>
+    </tr>
+
+</table>
+-->
+
+<div *ngFor="#flug of fluege | async" class="col-sm-4">
+    <flug-card
+        [item]="flug"
+        [(selectedItem)]="selectedFlug">
+        
+        <a class="btn btn-default" [routerLink]="['/FlugEdit', {id: flug.id}]">Editieren</a>
+        
+    </flug-card>
+    
+    
+    
+</div>
+<!--
+            [selectedItem]="selectedFlug"
+        (selectedItemChange)="selectedFlug = $event">
+
+    -->
+<pre>
+    {{ selectedFlug | json }}
+</pre>
